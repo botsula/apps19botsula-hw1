@@ -5,13 +5,16 @@ import java.util.InputMismatchException;
 
 public class TemperatureSeriesAnalysis {
 
-    double[] tempr;
-    int len;
-    int ABS_ZERO = -273;
+    private double[] tempr;
+    private int len;
+    private static final int absZERO = -273;
+    private static final int LEN = 10;
+    private static final int specLEN = 100;
 
     public TemperatureSeriesAnalysis() {
-        this.tempr = new double[10];
-        this.len = 10;
+
+        this.tempr = new double[LEN];
+        this.len = LEN;
     }
 
     public TemperatureSeriesAnalysis(double[] temperatureSeries) {
@@ -21,7 +24,7 @@ public class TemperatureSeriesAnalysis {
 
     public void checkTemp(double[] arr) {
         for (double n : arr) {
-            if (n < ABS_ZERO) {
+            if (n < absZERO) {
                 throw new InputMismatchException();
             }
         }
@@ -46,7 +49,7 @@ public class TemperatureSeriesAnalysis {
             double av = this.average();
             double sum = 0;
             for (int i = 0; i < this.len; i++) {
-                double temp = Math.pow(this.tempr[i] - av, 2);
+                double temp = (this.tempr[i] - av) * (this.tempr[i] - av);
                 sum += temp;
             }
             return Math.sqrt(sum / len);
@@ -123,7 +126,7 @@ public class TemperatureSeriesAnalysis {
         int counter = 0;
         if (len > 0) {
             checkTemp(tempr);
-            double[] less = new double[100];
+            double[] less = new double[specLEN];
             System.out.println(less.length);
             for (int i = 0; i < len; i++) {
                 if (tempr[i] < tempValue) {
@@ -147,7 +150,7 @@ public class TemperatureSeriesAnalysis {
         int counter = 0;
         if (len > 0) {
             checkTemp(tempr);
-            double[] great = new double[100];
+            double[] great = new double[specLEN];
             for (int i = 0; i < len; i++) {
                 if (tempr[i] >= tempValue) {
                     if (counter >= great.length) {
@@ -169,7 +172,9 @@ public class TemperatureSeriesAnalysis {
     public TempSummaryStatistics summaryStatistics() {
         if (len > 0) {
             checkTemp(tempr);
-            TempSummaryStatistics fin = new TempSummaryStatistics(average(), deviation(), min(), max());
+            TempSummaryStatistics fin = new TempSummaryStatistics(
+                    average(), deviation(), min(), max()
+            );
             return fin;
         } else {
             throw new IllegalArgumentException();
@@ -187,10 +192,10 @@ public class TemperatureSeriesAnalysis {
             for (int j = 0; j < temps.length; j++) {
                 if (counter >= len) {
                     double[] temp = Arrays.copyOf(tempr, tempr.length);
-                    int tmp_len = tempr.length;
+                    int tmpLen = tempr.length;
                     tempr = new double[counter * 2];
                     len = tempr.length;
-                    for (int k = 0; k < tmp_len; k++) {
+                    for (int k = 0; k < tmpLen; k++) {
                         tempr[k] = temp[k];
                     }
                 }
