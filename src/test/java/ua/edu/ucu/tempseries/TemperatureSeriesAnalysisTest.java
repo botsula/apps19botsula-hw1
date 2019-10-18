@@ -19,7 +19,7 @@ public class TemperatureSeriesAnalysisTest {
     private TemperatureSeriesAnalysis common;
     private TemperatureSeriesAnalysis hard;
     private TemperatureSeriesAnalysis oneElement;
-    static final int specLEN = 3;
+    private int SPECLEN = 3;
 
 
     @Before
@@ -160,7 +160,7 @@ public class TemperatureSeriesAnalysisTest {
 
     @Test
     public void TestFindTempsGreater() {
-        double[] exp = new double[specLEN];
+        double[] exp = new double[SPECLEN];
         exp[0] = 3.0;
         exp[1] = 5.0;
         double[] actual = common.findTempsGreaterThen(1.0);
