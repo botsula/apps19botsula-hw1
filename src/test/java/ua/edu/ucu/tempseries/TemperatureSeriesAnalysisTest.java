@@ -19,6 +19,7 @@ public class TemperatureSeriesAnalysisTest {
     private TemperatureSeriesAnalysis common;
     private TemperatureSeriesAnalysis hard;
     private TemperatureSeriesAnalysis oneElement;
+    static final int specLEN = 3;
 
 
     @Before
@@ -159,16 +160,31 @@ public class TemperatureSeriesAnalysisTest {
 
     @Test
     public void TestFindTempsGreater() {
-        expResult = 3.0;
-        actualResult = common.findTempsGreaterThen(1.0)[0];
-        assertEquals(expResult, actualResult, 0.001);
+        double[] exp = new double[specLEN];
+        exp[0] = 3.0;
+        exp[1] = 5.0;
+        double[] actual = common.findTempsGreaterThen(1.0);
+        assertArrayEquals(exp, actual, 0.00001);
   }
 
     @Test
     public void TestSummaryStatistics() {
-//        TemperatureSeriesAnalysis my_ser = new TemperatureSeriesAnalysis();
-        TempSummaryStatistics stat_sum = new TempSummaryStatistics(common.average(), common.deviation(), common.min(), common.max());
-        assertArrayEquals(new double[]{1.0, 3.7416573867739413, -5.0, 5.0}, new double[]{stat_sum.getAvgTemp(), stat_sum.getDevTemp(), stat_sum.getMinTemp(), stat_sum.getMaxTemp()}, 0.0001);
+        TempSummaryStatistics stat_sum = new TempSummaryStatistics(common.average(),
+                common.deviation(), common.min(), common.max());
+        assertArrayEquals(new double[]{1.0, 3.7416573867739413, -5.0, 5.0},
+                new double[]{stat_sum.getAvgTemp(), stat_sum.getDevTemp(),
+                        stat_sum.getMinTemp(), stat_sum.getMaxTemp()}, 0.0001);
+    }
+
+    @Test
+    public void TestSummaryFunction() {
+        TempSummaryStatistics stat_sum = new TempSummaryStatistics(common.average(),
+                common.deviation(), common.min(), common.max());
+        assertArrayEquals(new double[]{1.0, 3.7416573867739413, -5.0, 5.0},
+                new double[]{common.summaryStatistics().getAvgTemp(),
+                        common.summaryStatistics().getDevTemp(),
+                common.summaryStatistics().getMinTemp(),
+                common.summaryStatistics().getMaxTemp()}, 0.00001);
     }
 
     @Test
@@ -184,5 +200,13 @@ public class TemperatureSeriesAnalysisTest {
         double[] temp = new double[]{-3.0, 4.0, -274.0};
         TemperatureSeriesAnalysis seriesAnalysis = new TemperatureSeriesAnalysis(temp);
         seriesAnalysis.checkTemp(temp);
+    }
+
+    @Test
+    public void testTemperatureSeriesAnalysisLen() {
+        TemperatureSeriesAnalysis a = new TemperatureSeriesAnalysis();
+        expResult = 10;
+        actualResult = a.getLen();
+        assertEquals(expResult, actualResult, 0.00001);
     }
 }

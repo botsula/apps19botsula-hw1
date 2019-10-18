@@ -7,14 +7,24 @@ public class TemperatureSeriesAnalysis {
 
     private double[] tempr;
     private int len;
-    private static final int absZERO = -273;
-    private static final int LEN = 10;
-    private static final int specLEN = 100;
+    static final int absZERO = -273;
+    static final int LEN = 10;
+    static final int specLEN = 3;
+
+
 
     public TemperatureSeriesAnalysis() {
 
         this.tempr = new double[LEN];
         this.len = LEN;
+    }
+
+    public double[] getTempr() {
+        return tempr;
+    }
+
+    public int getLen() {
+        return len;
     }
 
     public TemperatureSeriesAnalysis(double[] temperatureSeries) {
@@ -152,7 +162,7 @@ public class TemperatureSeriesAnalysis {
             checkTemp(tempr);
             double[] great = new double[specLEN];
             for (int i = 0; i < len; i++) {
-                if (tempr[i] >= tempValue) {
+                if (tempr[i] > tempValue) {
                     if (counter >= great.length) {
                         double[] temp = Arrays.copyOf(great, great.length);
                         great = new double[counter * 2];
