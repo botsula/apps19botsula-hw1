@@ -7,9 +7,9 @@ public class TemperatureSeriesAnalysis {
 
     private double[] tempr;
     private int len;
-    private int absZERO = -273;
-    private int LEN = 10;
-    private int specLEN = 3;
+    static final double ABSZERO = -273;
+    static final int LEN = 10;
+    static final int SPECLEN = 3;
 
     public TemperatureSeriesAnalysis() {
 
@@ -33,7 +33,7 @@ public class TemperatureSeriesAnalysis {
 
     public void checkTemp(double[] arr) {
         for (double n : arr) {
-            if (n < absZERO) {
+            if (n < ABSZERO) {
                 throw new InputMismatchException();
             }
         }
@@ -135,7 +135,7 @@ public class TemperatureSeriesAnalysis {
         int counter = 0;
         if (len > 0) {
             checkTemp(tempr);
-            double[] less = new double[specLEN];
+            double[] less = new double[SPECLEN];
             System.out.println(less.length);
             for (int i = 0; i < len; i++) {
                 if (tempr[i] < tempValue) {
@@ -159,7 +159,7 @@ public class TemperatureSeriesAnalysis {
         int counter = 0;
         if (len > 0) {
             checkTemp(tempr);
-            double[] great = new double[specLEN];
+            double[] great = new double[SPECLEN];
             for (int i = 0; i < len; i++) {
                 if (tempr[i] > tempValue) {
                     if (counter >= great.length) {
